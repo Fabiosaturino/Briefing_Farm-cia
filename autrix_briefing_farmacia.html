@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Autrix · Briefing do Agente · Farmácia</title>
+<meta property="og:title" content="Autrix · Briefing do Agente · Farmácia">
+<meta property="og:description" content="Preencha o briefing para construirmos o agente de atendimento da sua farmácia.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap');
+  :root{--bg:#0b0d1a;--card:#161a2e;--border:#252a45;--accent:#6c63ff;--accent2:#4a90d9;--text:#e8eaf6;--muted:#6b7280;--success:#34d399}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;font-weight:300;min-height:100vh;padding:0 0 80px;background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(108,99,255,.15) 0%,transparent 70%)}
+
+  /* === BANNER NO-JS === */
+  #nojs-banner{background:linear-gradient(135deg,#6c63ff,#4a90d9);padding:24px 20px;text-align:center;font-size:15px;font-weight:500;color:#fff;line-height:1.6;position:sticky;top:0;z-index:9999}
+  #nojs-banner b{display:block;font-size:18px;margin-bottom:8px}
+  #nojs-banner .steps{background:rgba(0,0,0,.2);border-radius:10px;padding:14px 16px;margin-top:14px;font-size:13px;text-align:left;line-height:1.8}
+  #nojs-banner .steps span{display:inline-block;width:22px;height:22px;background:rgba(255,255,255,.2);border-radius:50%;text-align:center;line-height:22px;font-size:11px;font-weight:700;margin-right:6px}
+
+  .topbar{background:rgba(11,13,26,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+  .logo-name{font-family:'Syne',sans-serif;font-weight:400;font-size:17px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.9)}
+  .topbar-right{margin-left:auto;font-size:11px;color:var(--muted)}
+
+  .progress-bar{height:2px;background:var(--border);position:sticky;top:52px;z-index:99}
+  .progress-fill{height:100%;background:linear-gradient(to right,var(--accent),var(--accent2));width:0%;transition:width .4s;box-shadow:0 0 10px var(--accent)}
+
+  .container{max-width:720px;margin:0 auto;padding:44px 16px 0}
+
+  .hero{margin-bottom:36px}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.25);border-radius:20px;padding:6px 14px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:18px}
+  .hero-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);display:inline-block;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,6vw,3.2rem);font-weight:300;line-height:1.1;margin-bottom:14px;background:linear-gradient(135deg,#e8eaf6 30%,#6c63ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:14px;color:var(--muted);line-height:1.7;max-width:520px}
+
+  .steps-nav{display:flex;gap:5px;margin-bottom:32px;flex-wrap:wrap}
+  .sdot{width:16px;height:3px;border-radius:2px;background:var(--border);transition:all .3s}
+  .sdot.done{background:var(--success)}
+
+  .sec-hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .sec-icon{width:38px;height:38px;border-radius:10px;background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.25);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .sec-title{font-family:'Syne',sans-serif;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .sec-desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+  .divider{height:1px;background:linear-gradient(to right,var(--accent),transparent);opacity:.2;margin:28px 0 20px}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 16px;margin-bottom:14px;transition:border-color .3s}
+  .card:focus-within{border-color:#4a4fcc;box-shadow:0 0 0 3px rgba(108,99,255,.2)}
+  .q-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+  .q-num{width:26px;height:26px;border-radius:7px;background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:var(--accent);flex-shrink:0;margin-top:2px}
+  .q-text{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;flex:1}
+  .q-tags{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .tag{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:3px 8px;border-radius:4px}
+  .tq{background:rgba(108,99,255,.12);color:#a89dff;border:1px solid rgba(108,99,255,.2)}
+  .tr{background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2)}
+  .tp{background:rgba(74,144,217,.1);color:#4a90d9;border:1px solid rgba(74,144,217,.2)}
+  .tc{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.25)}
+
+  textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:inherit;font-size:16px;font-weight:300;padding:12px 14px;resize:vertical;outline:none;min-height:80px;-webkit-appearance:none;appearance:none}
+  textarea:focus{border-color:var(--accent);background:rgba(108,99,255,.04)}
+  textarea::placeholder{color:#3a3f5c}
+
+  .hint{font-size:11px;color:#4a4f6a;margin-top:7px;line-height:1.5;display:flex;gap:6px}
+  .hint::before{content:'\2192';color:var(--accent);flex-shrink:0}
+
+  /* === NOTAS / CALLOUTS === */
+  .note{border-radius:10px;padding:14px 16px;font-size:12.5px;line-height:1.65;margin-bottom:14px}
+  .note.accent{background:rgba(108,99,255,.06);border:1px solid rgba(108,99,255,.25);border-left:3px solid var(--accent);color:#cfc9ff}
+  .note.blue{background:rgba(74,144,217,.06);border:1px solid rgba(74,144,217,.25);border-left:3px solid var(--accent2);color:#bcd0ea}
+  .note b{color:#e8eaf6;font-weight:600}
+  .note ul{list-style:none;margin-top:8px}
+  .note li{padding:3px 0 3px 16px;position:relative}
+  .note li::before{content:'\2014';position:absolute;left:0;color:var(--accent)}
+
+  /* === SELETOR DE TIPO DE OPERAÇÃO === */
+  .opgrid{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+  .optcard{display:block;position:relative;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 16px 16px 50px;cursor:pointer;transition:border-color .25s,background .25s}
+  .optcard:hover{border-color:#3a4060}
+  .optcard input{position:absolute;opacity:0;pointer-events:none}
+  .optcard .radio{position:absolute;left:16px;top:18px;width:20px;height:20px;border-radius:50%;border:2px solid var(--border);transition:all .25s}
+  .optcard.sel{border-color:var(--accent);background:rgba(108,99,255,.06);box-shadow:0 0 0 1px rgba(108,99,255,.3)}
+  .optcard.sel .radio{border-color:var(--accent);background:radial-gradient(circle at center,var(--accent) 0 6px,transparent 7px)}
+  .opt-name{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;letter-spacing:.03em;color:var(--text);margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .opt-badge{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:3px 7px;border-radius:4px;background:rgba(108,99,255,.12);color:#a89dff;border:1px solid rgba(108,99,255,.2)}
+  .opt-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+  .toggle-card{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;margin-top:4px;position:relative}
+  .toggle-card.sel{border-color:var(--success);background:rgba(52,211,153,.05)}
+  .toggle-card input{position:absolute;opacity:0;pointer-events:none}
+  .tg-switch{width:42px;height:24px;border-radius:14px;background:var(--border);position:relative;flex-shrink:0;transition:background .25s}
+  .tg-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .25s}
+  .toggle-card.sel .tg-switch{background:var(--success)}
+  .toggle-card.sel .tg-switch::after{transform:translateX(18px)}
+  .tg-text{font-size:13px;font-weight:500;color:var(--text)}
+  .tg-text small{display:block;font-size:11px;color:var(--muted);font-weight:300;margin-top:3px;line-height:1.5}
+
+  #gate{background:rgba(108,99,255,.06);border:1px dashed rgba(108,99,255,.35);border-radius:12px;padding:22px 18px;text-align:center;font-size:13px;color:#a89dff;margin-top:8px;line-height:1.6}
+  #gate b{display:block;font-family:'Syne',sans-serif;font-size:12px;letter-spacing:.06em;margin-bottom:4px;color:#cfc9ff}
+
+  .btn-generate{display:block;width:100%;padding:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;letter-spacing:.05em;cursor:pointer;box-shadow:0 4px 24px rgba(108,99,255,.35);min-height:56px;-webkit-appearance:none;appearance:none;touch-action:manipulation;-webkit-user-select:none;user-select:none;margin:28px 0 0}
+  .btn-generate:active{opacity:.8}
+
+  #resultado{display:none;margin-top:36px}
+  .result-card{background:var(--card);border:1px solid rgba(108,99,255,.3);border-radius:14px;padding:22px 16px;box-shadow:0 0 40px rgba(108,99,255,.1)}
+  .res-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+  .res-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--success);display:flex;align-items:center;gap:8px}
+  .res-check{width:22px;height:22px;background:rgba(52,211,153,.15);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+  .btn-copy{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.3);border-radius:8px;color:var(--accent);font-family:inherit;font-size:13px;font-weight:500;padding:10px 20px;cursor:pointer;-webkit-appearance:none;appearance:none;touch-action:manipulation;min-height:44px;width:100%}
+  .btn-copy.ok{color:var(--success);border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.08)}
+
+  #output-text{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12px;line-height:1.8;color:#c5c8e8;white-space:pre-wrap;word-break:break-word;max-height:420px;overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:inherit}
+  .copy-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+
+  @media(max-width:600px){
+    .topbar{padding:12px 16px}
+    .progress-bar{top:48px}
+    .container{padding:28px 12px 0}
+    h1{font-size:clamp(1.7rem,7vw,2.4rem)}
+    .card{padding:16px 12px}
+    .q-text{font-size:13px}
+    .optcard{padding:14px 14px 14px 46px}
+    .optcard .radio{left:14px}
+  }
+</style>
+</head>
+<body>
+
+<!-- BANNER: visível quando JS está bloqueado -->
+<div id="nojs-banner">
+  <b>📱 Abra no navegador para preencher</b>
+  O WhatsApp não permite formulários interativos. Para preencher o briefing:
+  <div class="steps">
+    <span>1</span> Toque nos <b>3 pontinhos</b> (⋮) no canto superior direito<br>
+    <span>2</span> Selecione <b>"Abrir no navegador"</b> ou <b>"Abrir com..."</b><br>
+    <span>3</span> Escolha <b>Chrome</b> ou <b>Safari</b>
+  </div>
+</div>
+<script>document.getElementById('nojs-banner').style.display='none';</script>
+
+<div class="topbar">
+  <span class="logo-name">AUTRIX</span>
+  <span class="topbar-right">Briefing &middot; Farmácia</span>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow"><span class="hero-dot"></span> Novo Projeto &middot; Farmácia</div>
+    <h1>Briefing do<br>Agente de Farmácia</h1>
+    <p class="hero-sub">Preencha as perguntas abaixo para construirmos um agente sob medida. Comece pelo <b style="color:#a89dff;font-weight:600">tipo de operação</b> — é ele que define o objetivo, o tom e quais perguntas aparecem para você.</p>
+  </div>
+
+  <div class="steps-nav" id="stepsNav"></div>
+
+  <!-- BLOCO 0 — TIPO DE OPERAÇÃO -->
+  <div class="sec-hdr"><div class="sec-icon">🧭</div><div><div class="sec-title">Tipo de Operação</div><div class="sec-desc">O ponto de partida — define o objetivo do agente</div></div></div>
+
+  <div class="note accent">
+    Antes das perguntas, diga <b>como sua farmácia atende</b>. Cada modelo muda o que o agente faz:
+    <ul>
+      <li><b>B2C</b> — atende e vende para o cliente final. Foco em disponibilidade, pedido, entrega e receita.</li>
+      <li><b>B2B</b> — vende para outras empresas (farmácias, clínicas, hospitais, pet shops). Foco em qualificar o CNPJ e fechar volume.</li>
+      <li><b>SDR</b> — só capta e qualifica leads de campanha e passa para um humano. Não fecha venda sozinho.</li>
+    </ul>
+  </div>
+
+  <div class="opgrid">
+    <label class="optcard"><input type="radio" name="optipo" value="b2c" onchange="scope()"><span class="radio"></span>
+      <div class="opt-name">Atendimento ao Consumidor <span class="opt-badge">B2C</span></div>
+      <div class="opt-desc">Drogaria, farmácia de bairro ou rede que vende para o cliente final. O agente tira dúvidas de disponibilidade, monta pedidos, organiza o delivery, recebe receitas e agenda serviços (vacina, aferição, aplicação).</div>
+    </label>
+
+    <label class="optcard"><input type="radio" name="optipo" value="b2b" onchange="scope()"><span class="radio"></span>
+      <div class="opt-name">Venda para Empresas <span class="opt-badge">B2B</span></div>
+      <div class="opt-desc">Distribuidora, indústria ou manipulação no atacado que vende para outras empresas. O agente qualifica o comprador PJ (CNPJ/CRF), informa condições e organiza pedidos por volume.</div>
+    </label>
+
+    <label class="optcard"><input type="radio" name="optipo" value="sdr" onchange="scope()"><span class="radio"></span>
+      <div class="opt-name">Captação &amp; Qualificação <span class="opt-badge">SDR</span></div>
+      <div class="opt-desc">Agente que recebe leads de campanhas (ex.: manipulados de emagrecimento, performance, estética) com uma função só: qualificar e encaminhar para o farmacêutico ou consultor. Não fecha a venda sozinho — agenda ou transfere.</div>
+    </label>
+  </div>
+
+  <label class="toggle-card" id="manipCard"><input type="checkbox" id="opmanip" onchange="scope()">
+    <span class="tg-switch"></span>
+    <span class="tg-text">É farmácia de manipulação?
+      <small>Marque se vocês manipulam fórmulas. Funciona com qualquer modelo acima e libera as perguntas de orçamento de fórmula, receita e prazo.</small>
+    </span>
+  </label>
+
+  <div id="gate">
+    <b>SELECIONE O TIPO DE OPERAÇÃO ACIMA</b>
+    Assim que você escolher, o restante do briefing aparece já adaptado ao seu modelo de farmácia.
+  </div>
+
+  <!-- BLOCO 1 — IDENTIDADE & CONTEXTO (todos) -->
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">🏢</div><div><div class="sec-title">Identidade &amp; Contexto</div><div class="sec-desc">Quem é o agente e o que representa</div></div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">01</div><div class="q-text">Qual é o nome do agente e qual farmácia/rede ele representa? Como você quer que ele se apresente?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="Nome e apresentação do agente" placeholder="Ex: Bia, atendente da Drogaria Saúde Já, sempre cordial e objetiva..." oninput="up()"></textarea><div class="hint">O nome humanizado já transmite a postura do atendimento.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">02</div><div class="q-text">Dados institucionais: endereço(s), CNPJ, telefone, WhatsApp, site e horários. Quantas unidades?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="Dados institucionais (endereço, CNPJ, contatos, horários)" placeholder="Ex: Av. Brasil, 100 — Mauá/SP. WhatsApp (11) 99999-0000. Seg–Sáb 8h–22h, Dom 8h–14h. 2 lojas..." oninput="up()"></textarea><div class="hint">O agente precisa desses dados para responder sem inventar.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">03</div><div class="q-text">História e credenciais: fundação, trajetória, diferenciais — e quem é o farmacêutico responsável (RT) e o CRF.</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="História, farmacêutico responsável (RT/CRF) e credenciais" placeholder="Ex: Desde 2008 no bairro. Farmacêutica responsável: Dra. Ana Lima, CRF-SP 00000. Atendimento humanizado..." oninput="up()"></textarea><div class="hint">A presença do farmacêutico responsável passa segurança e é exigência legal.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">04</div><div class="q-text">Principais categorias/produtos. Qual é o carro-chefe? O que gera mais dúvida? Informe redes sociais e links.</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="Categorias, carro-chefe e redes sociais" placeholder="Ex: Medicamentos, dermocosméticos, perfumaria, conveniência. Carro-chefe: dermo. Instagram @..." oninput="up()"></textarea><div class="hint">Identificar o destaque ajuda a preparar os argumentos de valor.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">05</div><div class="q-text">Quem é o perfil ideal do cliente? Existe um perfil que chega mas não converte bem?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="Perfil ideal do cliente" placeholder="Ex: Moradores do bairro que querem entrega rápida; clientes recorrentes de uso contínuo..." oninput="up()"></textarea><div class="hint">Define a temperatura do lead e adapta a abordagem.</div></div>
+
+  <!-- BLOCO 2 — CONFORMIDADE FARMACÊUTICA (todos) -->
+  <div class="divider" data-scope="all"></div>
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">⚖️</div><div><div class="sec-title">Conformidade Farmacêutica</div><div class="sec-desc">Limites inegociáveis de um agente de farmácia</div></div></div>
+
+  <div class="note blue" data-scope="all">
+    ⚠️ <b>Limites que o agente sempre respeita.</b> Por se tratar de um estabelecimento de saúde, o agente <b>nunca indica, prescreve ou recomenda</b> medicamento, dose ou tratamento, e <b>nunca dá diagnóstico</b>. Toda dúvida clínica vai para o <b>farmacêutico responsável</b>. As perguntas abaixo definem exatamente como ele faz isso no seu negócio.
+  </div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">06</div><div class="q-text">Confirma que o agente não pode indicar/prescrever medicamento, dose ou tratamento, nem diagnosticar? Quem assume as dúvidas clínicas?</div></div><div class="q-tags"><span class="tag tc">Conformidade</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[Conformidade] Limite clínico e farmacêutico responsável" placeholder="Ex: Confirmado. Dúvidas de uso/indicação vão para a farmacêutica Dra. Ana, presencial ou por transferência..." oninput="up()"></textarea><div class="hint">Indicação e prescrição são atos restritos — o agente apenas direciona ao profissional.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">07</div><div class="q-text">Medicamentos com receita (tarja vermelha/preta): como o cliente envia a receita? Vocês retêm a receita? O agente confirma disponibilidade antes?</div></div><div class="q-tags"><span class="tag tc">Conformidade</span><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[Conformidade] Medicamentos com receita / retenção" placeholder="Ex: Cliente envia foto da receita pelo WhatsApp; conferimos validade; tarja preta exige retenção..." oninput="up()"></textarea><div class="hint">Define o fluxo de receita sem o agente assumir responsabilidade clínica.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">08</div><div class="q-text">Medicamentos controlados (Portaria 344/98 — receita azul/amarela/notificação): vocês vendem? Qual o procedimento? Pode por WhatsApp/delivery ou só presencial?</div></div><div class="q-tags"><span class="tag tc">Conformidade</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[Conformidade] Medicamentos controlados (Port. 344/98)" placeholder="Ex: Vendemos só presencial, com retenção da receita original e documento. Agente não negocia controlado pelo chat..." oninput="up()"></textarea><div class="hint">Controlados costumam exigir retenção de receita e, muitas vezes, atendimento presencial. Confirme com seu RT e o CRF da sua região.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">09</div><div class="q-text">Palavras e promessas que o agente nunca pode usar.</div></div><div class="q-tags"><span class="tag tc">Conformidade</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[Conformidade] Termos e promessas proibidos" placeholder="Ex: Nunca dizer 'cura', 'garante emagrecimento', 'sem efeito colateral', 'substitui seu remédio'..." oninput="up()"></textarea><div class="hint">Definir limites protege a reputação e mantém o agente dentro da lei.</div></div>
+
+  <!-- BLOCO 3 — FUNIL & COMPORTAMENTO (todos) -->
+  <div class="divider" data-scope="all"></div>
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">🎯</div><div><div class="sec-title">Funil &amp; Comportamento do Lead</div><div class="sec-desc">Como o cliente chega e como deve avançar</div></div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">10</div><div class="q-text">Qual a primeira coisa que os clientes perguntam? O que costuma interromper a conversa antes de fechar?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Primeira pergunta do cliente / ponto de atrito" placeholder="Ex: Quase sempre perguntam 'vocês têm tal remédio?' e 'quanto custa?'..." oninput="up()"></textarea><div class="hint">Expõe o principal ponto de atrito do funil.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">11</div><div class="q-text">Como o agente deve lidar com preço? Pode informar valores? Há itens com preço sensível/tabelado (PMC), genéricos ou descontos a destacar?</div></div><div class="q-tags"><span class="tag tr">Retenção</span><span class="tag tp">Preço</span></div><textarea data-q data-label="Política de preço (PMC, genéricos, descontos)" placeholder="Ex: Pode informar preço de itens de balcão; destacar genérico mais barato; informar promoções..." oninput="up()"></textarea><div class="hint">Em farmácia, preço é decisivo — defina o que pode ser dito e o que ancorar.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">12</div><div class="q-text">Qual o próximo passo desejado após o primeiro contato? (fechar pedido e entrega, agendar, gerar proposta, transferir)</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Próximo passo desejado (CTA)" placeholder="Ex: Confirmar itens e fechar o pedido para entrega no mesmo dia..." oninput="up()"></textarea><div class="hint">O agente nunca deve deixar o cliente sem saber o que fazer a seguir.</div></div>
+
+  <!-- BLOCO 4 — PERSONALIDADE & TOM (todos) -->
+  <div class="divider" data-scope="all"></div>
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">🎭</div><div><div class="sec-title">Personalidade &amp; Tom</div><div class="sec-desc">Como o agente deve se comunicar</div></div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">13</div><div class="q-text">Qual deve ser o tom da conversa? (acolhedor / direto / consultivo / formal / informal / empático)</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Tom da conversa" placeholder="Ex: Acolhedor e ágil, linguagem simples, sem termos técnicos demais..." oninput="up()"></textarea><div class="hint">O tom é o DNA emocional do agente.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">14</div><div class="q-text">Quais informações o agente precisa coletar para avançar/qualificar? (no B2C: nome, endereço, pagamento, receita; no SDR: o que define o lead; no B2B: CNPJ, volume, região)</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="Informações para qualificar / avançar" placeholder="Liste 3 a 5 informações essenciais, coletadas de forma natural..." oninput="up()"></textarea><div class="hint">Qualificação invisível — perguntas naturais, não um formulário.</div></div>
+
+  <!-- BLOCO 5 — PEDIDOS, DELIVERY & SERVIÇOS (B2C) -->
+  <div class="divider" data-scope="b2c"></div>
+  <div class="sec-hdr" data-scope="b2c"><div class="sec-icon">🛵</div><div><div class="sec-title">Pedidos, Delivery &amp; Serviços</div><div class="sec-desc">Específico do atendimento ao consumidor (B2C)</div></div></div>
+
+  <div class="card" data-scope="b2c"><div class="q-hdr"><div class="q-num">15</div><div class="q-text">Como funciona o delivery/tele-entrega? Raio de entrega, bairros, taxa, prazo e valor mínimo do pedido.</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="[B2C] Delivery / tele-entrega" placeholder="Ex: Entregamos num raio de 5 km, taxa R$ 5, em até 1h, pedido mínimo R$ 20..." oninput="up()"></textarea><div class="hint">É a dúvida mais comum no balcão digital.</div></div>
+
+  <div class="card" data-scope="b2c"><div class="q-hdr"><div class="q-num">16</div><div class="q-text">Formas de pagamento (Pix, link, maquininha na entrega, dinheiro)? Precisa de troco?</div></div><div class="q-tags"><span class="tag tp">Preço</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[B2C] Formas de pagamento" placeholder="Ex: Pix na hora do pedido, ou cartão/dinheiro na entrega. Perguntar troco para pagamento em dinheiro..." oninput="up()"></textarea><div class="hint">Definir o pagamento evita travar o fechamento.</div></div>
+
+  <div class="card" data-scope="b2c"><div class="q-hdr"><div class="q-num">17</div><div class="q-text">Programas e convênios: Farmácia Popular, programas de desconto de laboratório, convênios de empresa? Como o cliente acessa?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[B2C] Programas e convênios" placeholder="Ex: Atendemos Farmácia Popular (levar receita e documento); descontos de laboratório via cadastro..." oninput="up()"></textarea><div class="hint">Reduz preço percebido e fideliza uso contínuo.</div></div>
+
+  <div class="card" data-scope="b2c"><div class="q-hdr"><div class="q-num">18</div><div class="q-text">Serviços na loja (vacinas, aferição de pressão/glicemia, aplicação de injetáveis, testes rápidos, furo de orelha): o agente agenda? Como?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[B2C] Serviços na loja (vacinas, aferição, aplicação)" placeholder="Ex: Aplicação de injetável com receita, mediante agendamento; aferição gratuita sem agendar..." oninput="up()"></textarea><div class="hint">Serviços agendáveis aumentam o ticket e o fluxo de loja.</div></div>
+
+  <!-- BLOCO 7 — QUALIFICAÇÃO PJ & CONDIÇÕES (B2B) -->
+  <div class="divider" data-scope="b2b"></div>
+  <div class="sec-hdr" data-scope="b2b"><div class="sec-icon">🏭</div><div><div class="sec-title">Qualificação PJ &amp; Condições</div><div class="sec-desc">Específico da venda para empresas (B2B)</div></div></div>
+
+  <div class="card" data-scope="b2b"><div class="q-hdr"><div class="q-num">19</div><div class="q-text">Qual o perfil do comprador PJ (farmácia, clínica, hospital, pet shop, profissional de saúde)? Exige CNPJ e/ou CRF ativo?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[B2B] Perfil do comprador PJ (CNPJ/CRF)" placeholder="Ex: Vendemos só para PJ com CNPJ ativo; clínicas precisam de responsável técnico..." oninput="up()"></textarea><div class="hint">Define quem é lead válido e qual documentação pedir.</div></div>
+
+  <div class="card" data-scope="b2b"><div class="q-hdr"><div class="q-num">20</div><div class="q-text">Pedido mínimo, prazos de entrega e condições de pagamento (faturado, boleto, prazo)? Há tabela por volume?</div></div><div class="q-tags"><span class="tag tp">Preço</span><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[B2B] Pedido mínimo, prazos e condições" placeholder="Ex: Pedido mínimo R$ 500; boleto 28 dias para cliente cadastrado; desconto progressivo por volume..." oninput="up()"></textarea><div class="hint">Condições comerciais são o coração da negociação B2B.</div></div>
+
+  <div class="card" data-scope="b2b"><div class="q-hdr"><div class="q-num">21</div><div class="q-text">Qual a região de atendimento e a logística? Há representante por região?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[B2B] Região e logística" placeholder="Ex: Atendemos Grande SP e interior; entrega própria na capital, transportadora no interior..." oninput="up()"></textarea><div class="hint">O agente precisa saber até onde pode prometer atendimento.</div></div>
+
+  <div class="card" data-scope="b2b"><div class="q-hdr"><div class="q-num">22</div><div class="q-text">O agente deve reativar clientes inativos / estimular recompra? Com que frequência e critério?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="[B2B] Recompra / reativação de clientes" placeholder="Ex: Reativar quem não compra há 30 dias; sugerir reposição dos itens de giro..." oninput="up()"></textarea><div class="hint">Recompra é o maior valor recorrente no B2B.</div></div>
+
+  <!-- BLOCO 8 — CAPTAÇÃO & AGENDAMENTO (SDR) -->
+  <div class="divider" data-scope="sdr"></div>
+  <div class="sec-hdr" data-scope="sdr"><div class="sec-icon">🧲</div><div><div class="sec-title">Captação &amp; Agendamento</div><div class="sec-desc">Específico do SDR — qualificar e encaminhar</div></div></div>
+
+  <div class="card" data-scope="sdr"><div class="q-hdr"><div class="q-num">23</div><div class="q-text">De onde vêm os leads (Meta Ads, Google, indicação)? Qual a oferta/promessa da campanha?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[SDR] Origem dos leads e oferta da campanha" placeholder="Ex: Leads de anúncio no Instagram sobre fórmula de emagrecimento; oferta é avaliação com a farmacêutica..." oninput="up()"></textarea><div class="hint">A oferta da campanha define a expectativa do lead.</div></div>
+
+  <div class="card" data-scope="sdr"><div class="q-hdr"><div class="q-num">24</div><div class="q-text">O que define um lead QUALIFICADO vs. desqualificado? (ex.: tem receita/prescritor, perfil de saúde, orçamento, região)</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[SDR] Critério de lead qualificado x desqualificado" placeholder="Ex: Qualificado = tem prescritor ou aceita avaliação e está na região. Desqualificado = quer comprar sem receita..." oninput="up()"></textarea><div class="hint">Critério claro evita encaminhar lead frio para o time.</div></div>
+
+  <div class="card" data-scope="sdr"><div class="q-hdr"><div class="q-num">25</div><div class="q-text">Para onde vai o lead qualificado? (agenda com farmacêutico/consultor, transfere, marca avaliação) Qual ferramenta de agenda?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="[SDR] Destino do lead qualificado e ferramenta de agenda" placeholder="Ex: Agenda uma avaliação no Cal.com com a farmacêutica; ou transfere para a consultora Marina..." oninput="up()"></textarea><div class="hint">O SDR existe para entregar o lead no lugar certo.</div></div>
+
+  <div class="card" data-scope="sdr"><div class="q-hdr"><div class="q-num">26</div><div class="q-text">O SDR pode falar preço e fechar, ou só qualifica e passa adiante?</div></div><div class="q-tags"><span class="tag tr">Retenção</span><span class="tag tp">Preço</span></div><textarea data-q data-label="[SDR] O SDR fecha venda ou só qualifica?" placeholder="Ex: Não fala preço de fórmula nem fecha; só qualifica e agenda. Preço é com a farmacêutica..." oninput="up()"></textarea><div class="hint">Limitar o escopo do SDR mantém a conversa no trilho.</div></div>
+
+  <!-- BLOCO 6 — FÓRMULAS & MANIPULAÇÃO (manip) -->
+  <div class="divider" data-scope="manip"></div>
+  <div class="sec-hdr" data-scope="manip"><div class="sec-icon">⚗️</div><div><div class="sec-title">Fórmulas &amp; Manipulação</div><div class="sec-desc">Aparece porque você marcou "farmácia de manipulação"</div></div></div>
+
+  <div class="card" data-scope="manip"><div class="q-hdr"><div class="q-num">27</div><div class="q-text">Como funciona o orçamento de fórmula? O cliente manda a receita → vocês orçam? Em quanto tempo respondem?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[Manipulação] Orçamento de fórmula e prazo de resposta" placeholder="Ex: Cliente envia foto da receita; orçamos em até 30 min no horário comercial..." oninput="up()"></textarea><div class="hint">O orçamento é o principal gatilho de conversão na manipulação.</div></div>
+
+  <div class="card" data-scope="manip"><div class="q-hdr"><div class="q-num">28</div><div class="q-text">Qual o prazo de manipulação e entrega? Qual a validade do orçamento?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="[Manipulação] Prazo de manipulação e validade do orçamento" placeholder="Ex: Pronto em 2 dias úteis; entrega no 3º dia; orçamento vale 7 dias..." oninput="up()"></textarea><div class="hint">Prazos claros reduzem ansiedade e cancelamentos.</div></div>
+
+  <div class="card" data-scope="manip"><div class="q-hdr"><div class="q-num">29</div><div class="q-text">Quais as linhas/fórmulas mais vendidas (emagrecimento, performance, dermatológicos, nutracêuticos, veterinário)? Alguma exige prescritor parceiro?</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="[Manipulação] Linhas mais vendidas e prescritor parceiro" placeholder="Ex: Emagrecimento e dermato são os carros-chefe; emagrecimento exige prescritor parceiro..." oninput="up()"></textarea><div class="hint">Saber a linha estrela direciona a abordagem do agente.</div></div>
+
+  <div class="card" data-scope="manip"><div class="q-hdr"><div class="q-num">30</div><div class="q-text">Como tratar quem quer um manipulado SEM receita ou pede indicação de fórmula?</div></div><div class="q-tags"><span class="tag tc">Conformidade</span><span class="tag tr">Retenção</span></div><textarea data-q data-label="[Manipulação] Pedido sem receita / pedido de indicação" placeholder="Ex: Nunca indicar fórmula; encaminhar para prescritor parceiro ou para a farmacêutica avaliar..." oninput="up()"></textarea><div class="hint">O agente jamais indica fórmula — direciona ao prescritor ou ao farmacêutico.</div></div>
+
+  <!-- BLOCO 9 — LIMITES & TRANSFERÊNCIA (todos) -->
+  <div class="divider" data-scope="all"></div>
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">🔁</div><div><div class="sec-title">Limites &amp; Transferência</div><div class="sec-desc">Quando o agente passa para um humano</div></div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">31</div><div class="q-text">Em quais situações o agente deve transferir para um humano? Como comunicar a transição?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Gatilhos de transferência humana" placeholder="Ex: Dúvida clínica, reclamação, pedido de controlado, ou quando o cliente pede atendente..." oninput="up()"></textarea><div class="hint">A transferência deve ser apresentada como cuidado, não como limitação.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">32</div><div class="q-text">Qual o horário de funcionamento? Quando há humano/farmacêutico disponível para transferência?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Horário de funcionamento e disponibilidade humana" placeholder="Ex: Loja 8h–22h; farmacêutica disponível 9h–18h; fora disso, agente registra e avisa..." oninput="up()"></textarea><div class="hint">O agente precisa saber quando pode transferir.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">33</div><div class="q-text">Como o atendente humano entra na conversa? Assume direto, recebe aviso, ou há contato específico?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Como o humano assume a conversa" placeholder="Ex: O humano assume a mesma conversa no WhatsApp após o aviso do agente..." oninput="up()"></textarea><div class="hint">Quanto mais fluida a passagem, menor a chance do cliente abandonar.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">34</div><div class="q-text">Qual o nome do atendente/farmacêutico que recebe a transferência? Por onde chegam os leads?</div></div><div class="q-tags"><span class="tag tr">Retenção</span><span class="tag tq">Qualificação</span></div><textarea data-q data-label="Atendente/farmacêutico que recebe a transferência" placeholder="Ex: Atendente: Marina. Farmacêutica: Dra. Ana. Leads via WhatsApp e Instagram..." oninput="up()"></textarea><div class="hint">O nome humaniza a transferência.</div></div>
+
+  <!-- BLOCO 10 — CONHECIMENTO & OBJEÇÕES (todos) -->
+  <div class="divider" data-scope="all"></div>
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">🧠</div><div><div class="sec-title">Conhecimento &amp; Objeções</div><div class="sec-desc">O que o agente precisa saber para responder bem</div></div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">35</div><div class="q-text">Quais as 3 a 5 objeções mais comuns e a melhor resposta para cada?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Objeções mais comuns e respostas" placeholder="Ex: 'Achei na concorrência mais barato' → reforçar entrega e atendimento. 'Não tem na hora' → oferecer reserva..." oninput="up()"></textarea><div class="hint">Objeções mapeadas evitam improviso em momentos críticos.</div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">36</div><div class="q-text">Existe material de apoio? (tabela de preços/PMC, catálogo, lista de manipulados, lista de convênios, FAQ)</div></div><div class="q-tags"><span class="tag tq">Qualificação</span></div><textarea data-q data-label="Material de apoio (base de conhecimento / RAG)" placeholder="Ex: Tabela de preços em planilha, lista de convênios em PDF, FAQ com 15 perguntas..." oninput="up()"></textarea><div class="hint">Materiais viram a base de conhecimento (RAG) do agente.</div></div>
+
+  <!-- BLOCO 11 — FOLLOW-UP (todos) -->
+  <div class="divider" data-scope="all"></div>
+  <div class="sec-hdr" data-scope="all"><div class="sec-icon">🔔</div><div><div class="sec-title">Follow-up Automático</div><div class="sec-desc">Somente se contratado</div></div></div>
+
+  <div class="card" data-scope="all"><div class="q-hdr"><div class="q-num">37</div><div class="q-text">⚠️ Apenas se contratado. Quantas tentativas? Intervalo? Tom de cada mensagem?</div></div><div class="q-tags"><span class="tag tr">Retenção</span></div><textarea data-q data-label="Follow-up automático (somente se contratado)" placeholder="Ex: 3 tentativas. 1ª após 2h, 2ª após 24h, 3ª após 48h, tom leve..." oninput="up()"></textarea><div class="hint">Sem workflow ativo no n8n, não entra no System Message.</div></div>
+
+  <button class="btn-generate" type="button" data-scope="all" onclick="gerar()">⚡ Gerar Resumo para Envio</button>
+
+  <div id="resultado">
+    <div class="result-card">
+      <div class="res-hdr">
+        <div class="res-title"><span class="res-check">✓</span> Briefing gerado</div>
+        <button class="btn-copy" type="button" id="btnCopy" onclick="copiar()">Copiar tudo</button>
+      </div>
+      <pre id="output-text"></pre>
+      <div class="copy-note">Copie e envie por WhatsApp ou e-mail para a Autrix.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var TIPO_LABEL={b2c:'B2C \u2014 Atendimento ao Consumidor',b2b:'B2B \u2014 Venda para Empresas',sdr:'SDR \u2014 Capta\u00e7\u00e3o & Qualifica\u00e7\u00e3o'};
+
+function tipoAtual(){var s=document.querySelector('input[name="optipo"]:checked');return s?s.value:'';}
+
+function scope(){
+  var t=tipoAtual();
+  var manip=document.getElementById('opmanip').checked;
+  // mostra/esconde blocos conforme o tipo
+  var els=document.querySelectorAll('[data-scope]');
+  for(var i=0;i<els.length;i++){
+    var toks=els[i].getAttribute('data-scope').split(/\s+/);
+    var show=!!t&&(toks.indexOf('all')>=0||toks.indexOf(t)>=0||(manip&&toks.indexOf('manip')>=0));
+    els[i].style.display=show?'':'none';
+  }
+  // estado visual dos cards de seleção
+  var cards=document.querySelectorAll('.optcard');
+  for(var c=0;c<cards.length;c++){var r=cards[c].querySelector('input');cards[c].classList.toggle('sel',!!(r&&r.checked));}
+  var mc=document.getElementById('manipCard'),mi=document.getElementById('opmanip');
+  if(mc&&mi)mc.classList.toggle('sel',mi.checked);
+  // gate
+  var g=document.getElementById('gate');if(g)g.style.display=t?'none':'block';
+  up();
+}
+
+function visiveis(){
+  var all=document.querySelectorAll('textarea[data-q]');var v=[];
+  for(var i=0;i<all.length;i++){if(all[i].offsetParent!==null)v.push(all[i]);}
+  return v;
+}
+
+function up(){
+  var v=visiveis(),filled=0,i;
+  for(i=0;i<v.length;i++){
+    var card=v[i].closest('.card');
+    if(card){var num=card.querySelector('.q-num');if(num)num.textContent=(i+1<10?'0'+(i+1):''+(i+1));}
+    if(v[i].value&&v[i].value.trim())filled++;
+  }
+  var total=v.length||1;
+  var b=document.getElementById('progressFill');if(b)b.style.width=Math.round(filled/total*100)+'%';
+  var n=document.getElementById('stepsNav');if(!n)return;n.innerHTML='';
+  for(i=0;i<v.length;i++){var d=document.createElement('div');d.className='sdot'+((v[i].value&&v[i].value.trim())?' done':'');n.appendChild(d);}
+}
+
+function gerar(){
+  var t=tipoAtual();
+  if(!t){var g=document.getElementById('gate');if(g)g.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  var manip=document.getElementById('opmanip').checked;
+  var out='================================\n   AUTRIX \u00b7 BRIEFING \u2014 FARM\u00c1CIA\n================================\n\n';
+  out+='TIPO DE OPERA\u00c7\u00c3O: '+TIPO_LABEL[t]+'\n';
+  out+='FARM\u00c1CIA DE MANIPULA\u00c7\u00c3O: '+(manip?'Sim':'N\u00e3o')+'\n\n';
+  out+='--------------------------------\n\n';
+  var v=visiveis(),i;
+  for(i=0;i<v.length;i++){
+    var label=v[i].getAttribute('data-label')||'';
+    var val=v[i].value?v[i].value.trim():'';
+    var nn=(i+1<10?'0'+(i+1):''+(i+1));
+    out+='['+nn+'] '+label+'\n'+(val||'(n\u00e3o respondido)')+'\n\n';
+  }
+  out+='================================\nGerado via Autrix \u00b7 autrix.com.br';
+  var o=document.getElementById('output-text');if(o)o.textContent=out;
+  var r=document.getElementById('resultado');if(r){r.style.display='block';setTimeout(function(){r.scrollIntoView({behavior:'smooth',block:'start'})},200);}
+}
+
+function copiar(){
+  var o=document.getElementById('output-text');if(!o)return;var t=o.textContent||o.innerText||'';
+  function ok(){var b=document.getElementById('btnCopy');if(!b)return;b.textContent='\u2713 Copiado!';b.className='btn-copy ok';setTimeout(function(){b.textContent='Copiar tudo';b.className='btn-copy'},2500)}
+  function fb(s,cb){var a=document.createElement('textarea');a.value=s;a.setAttribute('readonly','');a.style.cssText='position:fixed;left:0;top:0;width:1px;height:1px;opacity:.01;z-index:99999';document.body.appendChild(a);if(/ipad|ipod|iphone/i.test(navigator.userAgent)){a.contentEditable=true;a.readOnly=false;var rng=document.createRange();rng.selectNodeContents(a);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(rng);a.setSelectionRange(0,999999)}else{a.focus();a.select()}try{document.execCommand('copy');if(cb)cb()}catch(e){}document.body.removeChild(a)}
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){navigator.clipboard.writeText(t).then(ok,function(){fb(t,ok)})}else{fb(t,ok)}
+}
+
+scope();
+</script>
+</body>
+</html>
